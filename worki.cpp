@@ -115,5 +115,4 @@ void na_odwrot(worek *w) {
 
 // Kończy i zwalnia pamięć
 void gotowe() {
-    smieciarka.clear(); // tak naprawde nie musimy nic recznie zwalniac 
 }
