@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 
-#include "worki2.h"
+#include "worki.h"
 
 using namespace std;
 
