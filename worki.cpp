@@ -21,7 +21,7 @@ namespace {
 struct przedmiot {
     trzymacz_wskaznikow *wsrodku = nullptr;
     przedmiot(trzymacz_wskaznikow *w) : wsrodku(w) {};
-    virtual ~przedmiot() = default;
+    virtual ~przedmiot() = default; // +8 B
 };
 
 struct worek : przedmiot {
@@ -33,6 +33,10 @@ struct worek : przedmiot {
     worek(const worek&) = delete;
     worek& operator=(const worek&) = delete;
 };
+
+static_assert(sizeof(trzymacz_wskaznikow) == 16);
+static_assert(          sizeof(przedmiot) == 16); // bo vptr
+static_assert(              sizeof(worek) == 32);
 
 static const int NUMER_BIURKA = -1;
 static auto posiadacz_biurka = make_unique<worek>(NUMER_BIURKA);
