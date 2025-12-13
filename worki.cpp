@@ -13,7 +13,7 @@ namespace {
 
     struct trzymacz_wskaznikow {
         worek *rodzic = nullptr;
-        int l_przedmiotow = 0;
+        int liczba_przedmiotow = 0;
     };
 
 }
@@ -52,40 +52,40 @@ worek *nowy_worek() {
 // Nowy przedmiot na biurku
 przedmiot *nowy_przedmiot() {
     smieciarka.push_back(make_unique<przedmiot>(posiadacz_biurka->syn.get()));
-    posiadacz_biurka->syn->l_przedmiotow++;
+    posiadacz_biurka->syn->liczba_przedmiotow++;
     return smieciarka.back().get();
 }
 
 // Wynik: liczba przedmiotów zawartych (bezpośrednio i pośrednio) w worku w
 int ile_przedmiotow(worek *w) {
-    return w->syn->l_przedmiotow;
+    return w->syn->liczba_przedmiotow;
 }
 
 // Wkłada worek co do worka gdzie.
 // Założenie: co i gdzie leżą na biurku.
 void wloz(worek *co, worek *gdzie) {
     co->wsrodku = gdzie->syn.get();
-    gdzie->syn->l_przedmiotow += ile_przedmiotow(co);
+    gdzie->syn->liczba_przedmiotow += ile_przedmiotow(co);
 }
 
 // Wkłada przedmiot co do worka gdzie.
 // Założenie: co i gdzie leżą na biurku.
 void wloz(przedmiot *co, worek *gdzie) {
     co->wsrodku = gdzie->syn.get();
-    gdzie->syn->l_przedmiotow++;
+    gdzie->syn->liczba_przedmiotow++;
 }
 
 // Wyjmuje przedmiot p z worka i kładzie na biurku.
 // Założenie: Przedmiot p był w worku leżącym na biurku.
 void wyjmij(przedmiot *p) {
-    p->wsrodku->l_przedmiotow--;
+    p->wsrodku->liczba_przedmiotow--;
     p->wsrodku = posiadacz_biurka->syn.get();
 }
 
 // Wyjmuje worek w z worka i kładzie na biurku.
 // Założenie: Worek w był w worku leżącym na biurku.
 void wyjmij(worek *w) {
-    w->wsrodku->l_przedmiotow -= ile_przedmiotow(w);
+    w->wsrodku->liczba_przedmiotow -= ile_przedmiotow(w);
     w->wsrodku = posiadacz_biurka->syn.get();
 }
 
@@ -113,8 +113,8 @@ void na_odwrot(worek *w) {
     // na poczatku w worku bylo x przedmiotow, a na biurku x+y
     // teraz jest   x+y, x
     // chcemy       y, x+y
-    w->syn->l_przedmiotow -= ile_przedmiotow(posiadacz_biurka.get()); // x+y -= x
-    posiadacz_biurka->syn->l_przedmiotow += ile_przedmiotow(w);       // x   += y
+    w->syn->liczba_przedmiotow -= ile_przedmiotow(posiadacz_biurka.get()); // x+y -= x
+    posiadacz_biurka->syn->liczba_przedmiotow += ile_przedmiotow(w);       // x   += y
 }
 
 // Kończy i zwalnia pamięć
